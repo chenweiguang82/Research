@@ -65,8 +65,6 @@ GRANT ALL PRIVILEGES ON DATABASE aiidadb to aiida;
 psql -h localhost -d aiidadb -U aiida -W
 ```
 输入密码，成功的话会出现提示符
-
-```
 ### 初始化Aiida
 - 切换到普通账户
 ```
