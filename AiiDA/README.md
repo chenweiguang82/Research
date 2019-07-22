@@ -97,3 +97,51 @@ The user has no password, do you want to set one? [y/N] y
 Insert the new password:
 Insert the new password (again):
 ```
+- 启动Aiida守护进程
+```
+verdi daemon start
+```
+输出为：
+```
+Starting the daemon... RUNNING
+```
+- 查看守护进程状态
+```
+verdi daemon status
+```
+输出为：
+```
+Profile: test
+Daemon is running as PID 1826 since 2019-07-22 08:13:20
+Active workers [1]:
+  PID    MEM %    CPU %  started
+-----  -------  -------  -------------------
+ 1830    0.118        0  2019-07-22 08:13:20
+Use verdi daemon [incr | decr] [num] to increase / decrease the amount of workers
+```
+- 查看verdi状态
+```
+verdi status
+```
+输出为：
+```
+ _ profile:     On profile test
+ _ repository:  /home/zznu/.aiida/repository/test
+ _ postgres:    Connected as aiida@localhost:5432
+ _ rabbitmq:    Connected to amqp://127.0.0.1?heartbeat=600
+ _ daemon:      Daemon is running as PID 1826 since 2019-07-22 08:13:20
+ ```
+ 这里要说明一下，上面的rabbitmq需要安装，不安装的话会执行上面命令会出现错误。
+ - 安装rabbitmq
+ ```
+ pacman -S rabbitmq
+ systemctl start rabbitmq.service
+ systemctl enable rabbitmq.service
+ ```
+ - 安装支持的作业调度器  
+ 一直以来我都用torque，现在想试试slurm
+ 查了下AUR里有slurm，不过需要munge，因此先安装了munge
+ ```pacman -S yaourt
+ yaourt -S munge
+ ```
+ 接下来安装slurm
