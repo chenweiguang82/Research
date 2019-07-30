@@ -145,3 +145,26 @@ verdi status
  yaourt -S munge
  ```
  接下来安装slurm
+- slurm 安装配置
+slrum的安装费了一些周折，主要原因下面讲
+```
+yay -S slurm-llnl
+```
+在安装的过程中需要修改PKGBUILD文件,修改为:
+```
+./configure \
+		--prefix=/usr \
+		--sbindir=/usr/bin \
+		--sysconfdir=/etc/slurm-llnl \
+		--localstatedir=/var \
+		--enable-pam \
+		--with-proctrack \
+		--with-pmix=/usr \
+		--with-hdf5=/usr/bin/h5cc \
+		--with-hwloc \
+		--with-rrdtool \
+		--with-ssl \
+		--with-munge
+```
+主要改了两个地方，一是`--with-pmix=/usr`，二是`--with-hdf5=/usr/bin/h5cc`，原因是我在自己账户下安装了miniconda，conda里也有这两个库，导致编译的时候pmix找不到，hdf5定位错误，会导致编译失败。  
+接下来对slurm进行配置，编辑`/etc/slurm/slurm.conf`，这个文件是需要在所有节点上都一样的，由于目前这台机器是一台，所以就打算管理和计算放在一个节点上。
